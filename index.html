@@ -8,13 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <!-- External CSS -->
   <link rel="stylesheet" href="styles/index.css" />
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <!-- Ad Overlay -->
-  <div class="ad-overlay" id="adOverlay">
+  <!-- Initial Ad Overlay (appears after 5 seconds of page load) -->
+  <div class="ad-overlay initial-ad" id="initialAdOverlay">
     <div class="ad-container">
       <div class="ad-card">
-        <button class="ad-close" id="adClose">✕</button>
+        <button class="ad-close" id="initialAdClose">✕</button>
         <div class="ad-image-wrapper">
           <img src="images/maya_ads.png" alt="Maya Ads" class="ad-image" />
           <div class="ad-glow"></div>
@@ -23,7 +26,39 @@
           <div class="ad-badge">✦ EXCLUSIVE OFFER</div>
           <h2 class="ad-title">Claim Your Reward</h2>
           <p class="ad-description">Special treats waiting for you. Don't miss out!</p>
-          <button class="ad-cta" id="adCtaBtn">Claim Now</button>
+          <button class="ad-cta" id="initialAdCta">Claim Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Claim Pop-up Ad (appears when Claim NOW button is clicked) -->
+  <div class="ad-overlay claim-popup" id="claimPopupOverlay">
+    <div class="popup-container">
+      <div class="popup-card">
+        <!-- Countdown Circle -->
+        <div class="countdown-circle">
+          <svg class="countdown-svg" viewBox="0 0 120 120">
+            <circle class="countdown-bg" cx="60" cy="60" r="54" />
+            <circle class="countdown-progress" id="countdownProgress" cx="60" cy="60" r="54" />
+          </svg>
+          <div class="countdown-number" id="countdownNumber">5</div>
+        </div>
+        
+        <div class="popup-image-wrapper">
+          <img src="images/maya_ads.png" alt="Maya Ads" class="popup-image" />
+          <div class="popup-glow"></div>
+        </div>
+        
+        <div class="popup-content">
+          <div class="popup-badge">✦ REDIRECTING</div>
+          <h2 class="popup-title">You're Almost There!</h2>
+          <p class="popup-description">Preparing your exclusive reward...</p>
+          <div class="popup-timer">
+            <span class="timer-label">Redirecting in</span>
+            <span class="timer-value" id="timerValue">5</span>
+            <span class="timer-unit">seconds</span>
+          </div>
         </div>
       </div>
     </div>
