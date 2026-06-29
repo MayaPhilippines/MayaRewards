@@ -342,71 +342,92 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* ========== HOT INDICATOR ========== */
-    .hot-indicator {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: linear-gradient(135deg, #ff4444, #ff6b6b);
-      color: #fff;
-      font-size: 0.5rem;
-      font-weight: 800;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
-      animation: hotPulse 1.5s ease-in-out infinite;
-      z-index: 5;
-    }
+    /* ========== HOT INDICATOR - WITH MOVEMENT ANIMATION ========== */
+.hot-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff2222, #ff6b6b, #ff2222);
+  background-size: 200% 200%;
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 800;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 30px rgba(255, 34, 34, 0.5), 0 0 60px rgba(255, 34, 34, 0.2);
+  animation: hotMove 1.5s ease-in-out infinite;
+  z-index: 10;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
-    @keyframes hotPulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
-      }
-      50% {
-        transform: scale(1.08);
-        box-shadow: 0 0 40px rgba(255, 68, 68, 0.5);
-      }
-    }
+.hot-indicator .hot-icon {
+  font-size: 0.6rem;
+  display: inline-block;
+  animation: iconBounce 0.8s ease-in-out infinite;
+}
 
-    /* ========== REDEEM BUTTON ========== */
-    .redeem-section {
-      margin-top: 0.5rem;
-    }
+@keyframes hotMove {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    background-position: 0% 50%;
+    box-shadow: 0 0 30px rgba(255, 34, 34, 0.5);
+  }
+  25% {
+    transform: translate(-3px, -3px) scale(1.05);
+    box-shadow: 0 0 50px rgba(255, 34, 34, 0.7);
+  }
+  50% {
+    transform: translate(3px, 2px) scale(1.08);
+    background-position: 100% 50%;
+    box-shadow: 0 0 60px rgba(255, 34, 34, 0.8), 0 0 100px rgba(255, 34, 34, 0.3);
+  }
+  75% {
+    transform: translate(-2px, 4px) scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 34, 34, 0.6);
+  }
+}
 
-    .redeem-btn {
-      background: linear-gradient(135deg, #2EF2A3, #1bcb86);
-      border: none;
-      padding: 0.9rem;
-      border-radius: 50px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #031009;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 100%;
-      box-shadow: 0 0 40px rgba(46, 242, 163, 0.1);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+@keyframes iconBounce {
+  0%, 100% {
+    transform: rotate(-15deg) scale(1);
+  }
+  50% {
+    transform: rotate(15deg) scale(1.2);
+  }
+}
 
-    .redeem-btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 60px rgba(46, 242, 163, 0.2);
-    }
+/* Glowing border animation */
+.hot-indicator::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 24px;
+  padding: 4px;
+  background: linear-gradient(135deg, #ff2222, #ff6b6b, #ffaa00, #ff2222);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.8;
+  animation: glowMove 2s ease-in-out infinite;
+}
 
-    .redeem-btn:active {
-      transform: scale(0.97);
-    }
-
-    .redeem-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-    }
+@keyframes glowMove {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.6;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
 
     /* ========== INFO BADGE ========== */
     .info-badge {
