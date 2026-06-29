@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (claimBtn) {
     claimBtn.addEventListener('click', function(e) {
       this.classList.add('loading');
-      this.innerHTML = '<span class="btn-icon" style="animation: spin 0.8s linear infinite;">⟳</span> Processing...';
+      this.innerHTML = '<span class="btn-icon" style="animation: spin 0.8s linear infinite; width:22px;height:22px;display:inline-block;">⟳</span> Processing...';
       
       setTimeout(() => {
         this.classList.remove('loading');
