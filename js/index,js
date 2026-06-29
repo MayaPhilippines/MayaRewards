@@ -1,0 +1,149 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // ========== AD OVERLAY ==========
+  const adOverlay = document.getElementById('adOverlay');
+  const adClose = document.getElementById('adClose');
+  const adCtaBtn = document.getElementById('adCtaBtn');
+  
+  // Show ad after page loads with delay
+  setTimeout(() => {
+    adOverlay.classList.add('active');
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+  }, 800);
+  
+  // Close ad function
+  function closeAd() {
+    adOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    // Show toast after closing ad
+    setTimeout(() => {
+      showToast('✨ Check out your exclusive rewards!');
+    }, 400);
+  }
+  
+  // Close button
+  adClose.addEventListener('click', closeAd);
+  
+  // CTA button in ad
+  adCtaBtn.addEventListener('click', function() {
+    closeAd();
+    // Scroll to claim button
+    setTimeout(() => {
+      const claimBtn = document.getElementById('claimBtn');
+      if (claimBtn) {
+        claimBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Highlight the claim button
+        claimBtn.style.boxShadow = '0 0 60px rgba(46, 242, 163, 0.6), 0 0 120px rgba(46, 242, 163, 0.2)';
+        setTimeout(() => {
+          claimBtn.style.boxShadow = '';
+        }, 2000);
+      }
+    }, 500);
+  });
+  
+  // Close ad on backdrop click
+  adOverlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeAd();
+    }
+  });
+
+  // ========== CLAIM BUTTON ==========
+  const claimBtn = document.getElementById('claimBtn');
+  
+  if (claimBtn) {
+    claimBtn.addEventListener('click', function(e) {
+      // Add loading state
+      this.classList.add('loading');
+      this.innerHTML = '<span class="btn-icon">⏳</span> Processing...';
+      
+      // Simulate processing
+      setTimeout(() => {
+        this.classList.remove('loading');
+        this.innerHTML = '<span class="btn-icon">💜</span> Claim NOW';
+        
+        // Show success message
+        showToast('🎉 Reward claimed successfully!');
+      }, 1500);
+    });
+  }
+  
+  // ========== TOAST FUNCTION ==========
+  function showToast(message) {
+    // Remove existing toast
+    const existingToast = document.querySelector('.toast-message');
+    if (existingToast) {
+      existingToast.remove();
+    }
+    
+    // Create toast
+    const toast = document.createElement('div');
+    toast.className = 'toast-message';
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(46, 242, 163, 0.2);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 9998;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      animation: slideUp 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Remove after 2.5 seconds
+    setTimeout(() => {
+      toast.style.animation = 'slideDown 0.3s ease';
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 2500);
+  }
+  
+  // ========== ANIMATION STYLES ==========
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // ========== BOTTOM NAVIGATION ==========
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    item.addEventListener('click', function() {
+      navItems.forEach(nav => nav.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
