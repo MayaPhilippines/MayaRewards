@@ -226,6 +226,15 @@ body::before {
   font-weight: 600;
 }
 
+/* CTA Wrapper */
+.cta-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
 /* Claim Button */
 .claim-btn {
   background: linear-gradient(135deg, #2EF2A3, #1bcb86);
@@ -246,7 +255,6 @@ body::before {
   transition: all 0.3s ease;
   text-transform: uppercase;
   width: fit-content;
-  margin-top: 0.5rem;
 }
 
 .claim-btn:hover {
@@ -264,6 +272,32 @@ body::before {
   height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.2));
+}
+
+/* Secured Badge */
+.secured-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 1rem;
+  background: rgba(46, 242, 163, 0.04);
+  border-radius: 40px;
+  border: 1px solid rgba(46, 242, 163, 0.06);
+  transition: all 0.3s ease;
+}
+
+.secured-badge:hover {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(46, 242, 163, 0.12);
+}
+
+.lock-icon {
+  font-size: 0.9rem;
+  opacity: 0.7;
 }
 
 /* Visual Content (Right Side) */
@@ -403,6 +437,19 @@ body::before {
   .hero-section {
     padding: 2rem 1.5rem;
   }
+
+  .cta-wrapper {
+    align-items: stretch;
+  }
+
+  .claim-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .secured-badge {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 600px) {
@@ -449,5 +496,10 @@ body::before {
   .treats-badge {
     font-size: 0.8rem;
     padding: 0.4rem 1rem;
+  }
+
+  .secured-badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.8rem;
   }
 }
