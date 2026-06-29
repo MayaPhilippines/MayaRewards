@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Maya Treats · Panalo Rewards</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
@@ -10,84 +10,115 @@
   <link rel="stylesheet" href="styles/index.css" />
 </head>
 <body>
-  <div class="main-wrapper">
-    <div class="hero-section">
-      <!-- Top left logo -->
-      <div class="logo-container">
-        <img src="images/maya_logo.png" alt="Maya" class="logo" />
+  <div class="mobile-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="status-icons">
+        <span class="signal">📶</span>
+        <span class="wifi">📶</span>
+        <span class="battery">🔋</span>
+      </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="main-card">
+      <!-- Header with Maya logo -->
+      <div class="header">
+        <div class="logo-wrapper">
+          <div class="maya-icon">💜</div>
+          <span class="maya-text">maya</span>
+        </div>
+        <div class="header-actions">
+          <span class="notification">🔔</span>
+          <span class="profile">👤</span>
+        </div>
       </div>
 
-      <!-- Main content -->
-      <div class="content-wrapper">
-        <!-- Left side: Text content -->
-        <div class="text-content">
-          <div class="treats-badge">
-            <span class="sparkle">✦</span>
-            Enjoy these
-            <span class="highlight">TREATS</span>
-            <span class="sparkle">✦</span>
-          </div>
+      <!-- Treats Badge -->
+      <div class="treats-badge">
+        <span class="sparkle">✦</span>
+        Enjoy these
+        <span class="highlight">TREATS</span>
+        <span class="sparkle">✦</span>
+      </div>
 
-          <h1 class="main-headline">
-            <span class="panalo">PANALO</span>
-            <span class="rewards">rewards!</span>
-          </h1>
+      <!-- Main Headline -->
+      <h1 class="main-headline">
+        <span class="panalo">PANALO</span>
+        <span class="rewards">rewards!</span>
+      </h1>
 
-          <p class="sub-text">
-            A winning treat reward just for you!
-          </p>
+      <!-- Sub Text -->
+      <p class="sub-text">
+        A winning treat reward just for you!
+      </p>
 
-          <!-- Reward cards -->
-          <div class="reward-cards">
-            <div class="reward-card">
-              <div class="reward-icon">🎁</div>
-              <div class="reward-amount">Up to <span class="amount">P1,000</span></div>
-              <div class="reward-label">reward</div>
-            </div>
-            <div class="reward-card">
-              <div class="reward-icon">🏆</div>
-              <div class="reward-amount">Up to <span class="amount">P1,000</span></div>
-              <div class="reward-label">reward</div>
-            </div>
-          </div>
-
-          <div class="exclusive-badge">
-            <span class="dot"></span>
-            Exclusive for <strong>Maya Users</strong>
-          </div>
-
-          <!-- CTA Button with Secured statement -->
-          <div class="cta-wrapper">
-            <button class="claim-btn" id="claimBtn">
-              <img src="images/maya_icon.png" alt="icon" class="btn-icon" />
-              Claim NOW
-            </button>
-            <div class="secured-badge">
-              <span class="lock-icon">🔒</span>
-              Secured &bull; Encrypted
-            </div>
+      <!-- Reward Cards -->
+      <div class="reward-cards">
+        <div class="reward-card">
+          <div class="reward-icon">🎁</div>
+          <div class="reward-info">
+            <div class="reward-amount">Up to <span class="amount">P1,000</span></div>
+            <div class="reward-label">reward</div>
           </div>
         </div>
+        <div class="reward-card">
+          <div class="reward-icon">🏆</div>
+          <div class="reward-info">
+            <div class="reward-amount">Up to <span class="amount">P1,000</span></div>
+            <div class="reward-label">reward</div>
+          </div>
+        </div>
+      </div>
 
-        <!-- Right side: Visual/Decorative -->
-        <div class="visual-content">
-          <div class="floating-card premium-card">
-            <div class="card-glow"></div>
-            <div class="card-content">
-              <span class="card-badge">🎉</span>
-              <div class="card-title">Your Treat</div>
-              <div class="card-amount">P1,000</div>
-              <div class="card-sub">Reward</div>
-              <div class="card-footer">✨ Exclusive</div>
-            </div>
-          </div>
-          <div class="floating-card secondary-card">
-            <div class="card-content">
-              <span class="card-badge">⭐</span>
-              <div class="card-title">Panalo</div>
-              <div class="card-amount-small">Reward</div>
-            </div>
-          </div>
+      <!-- Exclusive Badge -->
+      <div class="exclusive-badge">
+        <span class="dot"></span>
+        Exclusive for <strong>Maya Users</strong>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <button class="claim-btn" id="claimBtn">
+          <span class="btn-icon">💜</span>
+          Claim NOW
+        </button>
+        <div class="secured-badge">
+          <span class="lock-icon">🔒</span>
+          Secured &bull; Encrypted
+        </div>
+      </div>
+
+      <!-- Featured Reward Card (Floating) -->
+      <div class="featured-card">
+        <div class="featured-content">
+          <div class="featured-badge">🎉</div>
+          <div class="featured-title">Your Treat</div>
+          <div class="featured-amount">P1,000</div>
+          <div class="featured-sub">Reward</div>
+          <div class="featured-footer">✨ Exclusive</div>
+        </div>
+        <div class="featured-glow"></div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💳</span>
+          <span class="nav-label">Pay</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Rewards</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profile</span>
         </div>
       </div>
     </div>
