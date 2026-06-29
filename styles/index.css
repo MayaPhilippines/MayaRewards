@@ -11,7 +11,7 @@ body {
   justify-content: center;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: #030807;
-  padding: 0.5rem;
+  padding: 1rem;
   position: relative;
   overflow-x: hidden;
 }
@@ -59,7 +59,7 @@ body::after {
 }
 
 .ad-container {
-  max-width: 340px;
+  max-width: 380px;
   width: 100%;
   animation: adEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   transform: scale(0.85) translateY(30px);
@@ -85,7 +85,7 @@ body::after {
   background: linear-gradient(145deg, rgba(10, 25, 18, 0.95), rgba(3, 8, 7, 0.98));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-radius: 28px;
+  border-radius: 24px;
   padding: 1.2rem 1.2rem 1.5rem;
   border: 1px solid rgba(46, 242, 163, 0.2);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 
@@ -99,7 +99,7 @@ body::after {
   content: '';
   position: absolute;
   inset: -2px;
-  border-radius: 30px;
+  border-radius: 26px;
   padding: 2px;
   background: linear-gradient(135deg, rgba(46, 242, 163, 0.3), rgba(46, 242, 163, 0.05), rgba(46, 242, 163, 0.15));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -142,13 +142,18 @@ body::after {
   margin-bottom: 0.8rem;
   border: 1px solid rgba(46, 242, 163, 0.08);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  max-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .ad-image {
   width: 100%;
   height: auto;
-  max-height: 160px;
-  object-fit: cover;
+  max-height: 140px;
+  object-fit: contain;
   display: block;
   border-radius: 16px;
 }
@@ -273,8 +278,8 @@ body::after {
 }
 
 .maya-logo {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   filter: drop-shadow(0 0 20px rgba(46, 242, 163, 0.1));
 }
@@ -340,8 +345,8 @@ body::after {
 }
 
 .featured-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   filter: drop-shadow(0 0 20px rgba(46, 242, 163, 0.15));
 }
@@ -592,8 +597,8 @@ body::after {
 }
 
 .claim-btn .btn-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.1));
 }
@@ -651,12 +656,22 @@ body::after {
   }
   
   .maya-logo {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .featured-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .claim-btn .btn-icon {
+    width: 20px;
+    height: 20px;
   }
 
   .ad-container {
-    max-width: 300px;
+    max-width: 320px;
   }
 
   .ad-card {
@@ -669,11 +684,26 @@ body::after {
   }
 
   .ad-image-wrapper {
-    max-height: 120px;
+    max-height: 100px;
   }
 
   .ad-image {
-    max-height: 120px;
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 360px) {
+  .main-headline {
+    font-size: 1.8rem;
+  }
+  
+  .maya-text {
+    font-size: 1rem;
+  }
+  
+  .maya-logo {
+    width: 24px;
+    height: 24px;
   }
 }
 
