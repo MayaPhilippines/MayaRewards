@@ -174,7 +174,7 @@
     .ad-glow {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(46, 242, 163, 0.04), transparent 50%, rgba(46, 242, 163, 0.02));
+      background: linear-gradient(135deg, rgba(46, 242, 163, 0.04), transparent 50%, rgba(46, 242, 163,  ￼0.02));
       pointer-events: none;
       border-radius: 16px;
     }
@@ -787,58 +787,104 @@
       margin-bottom: 1rem;
     }
 
-    /* ========== REWARD CARDS ========== */
-    .reward-cards {
-      display: flex;
-      gap: 0.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .reward-card {
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border-radius: 16px;
-      padding: 0.8rem 1rem;
-      border: 1px solid rgba(46, 242, 163, 0.06);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex: 1;
+    /* ========== SPEND & GET REWARDS ========== */
+    .spend-rewards-section {
+      background: linear-gradient(145deg, rgba(20, 50, 40, 0.3), rgba(5, 15, 10, 0.4));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid rgba(46, 242, 163, 0.08);
+      margin-bottom: 1.2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
       transition: all 0.3s ease;
     }
 
-    .reward-card:active {
-      transform: scale(0.97);
+    .spend-rewards-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(46, 242, 163, 0.03), transparent 70%);
+      pointer-events: none;
+    }
+
+    .spend-rewards-section:hover {
       border-color: rgba(46, 242, 163, 0.15);
+      transform: translateY(-2px);
     }
 
-    .reward-icon {
-      font-size: 1.5rem;
-    }
-
-    .reward-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .reward-amount {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.75rem;
-      font-weight: 400;
-    }
-
-    .amount {
-      color: #2EF2A3;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .reward-label {
-      color: rgba(255, 255, 255, 0.25);
-      font-size: 0.55rem;
+    .spend-rewards-label {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .spend-rewards-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .spend-rewards-text .spend {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .spend-rewards-text .and {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    .spend-rewards-text .get {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .spend-rewards-text .rewards-highlight {
+      background: linear-gradient(135deg, #2EF2A3, #1bcb86);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 30px rgba(46, 242, 163, 0.15);
+      position: relative;
+    }
+
+    .spend-rewards-text .rewards-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(46, 242, 163, 0.3), transparent);
+      border-radius: 2px;
+    }
+
+    .spend-rewards-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(46, 242, 163, 0.06);
+      border-radius: 50%;
+      border: 1px solid rgba(46, 242, 163, 0.08);
+      font-size: 0.9rem;
+      margin-right: 0.2rem;
     }
 
     /* ========== EXCLUSIVE BADGE ========== */
@@ -1041,14 +1087,6 @@
         font-size: 2.2rem;
       }
       
-      .reward-cards {
-        flex-direction: column;
-      }
-      
-      .reward-card {
-        padding: 0.6rem 0.8rem;
-      }
-      
       .featured-amount {
         font-size: 2.2rem;
       }
@@ -1134,6 +1172,19 @@
       .balance-popup-amount {
         font-size: 2.8rem;
       }
+
+      .spend-rewards-text .rewards-highlight {
+        font-size: 1.4rem;
+      }
+
+      .spend-rewards-text .spend,
+      .spend-rewards-text .get {
+        font-size: 0.95rem;
+      }
+
+      .spend-rewards-section {
+        padding: 1rem 1rem;
+      }
     }
 
     @media (max-width: 360px) {
@@ -1148,6 +1199,10 @@
       .maya-logo {
         width: 24px;
         height: 24px;
+      }
+
+      .spend-rewards-text .rewards-highlight {
+        font-size: 1.2rem;
       }
     }
 
@@ -1278,21 +1333,15 @@
         A winning treat reward just for you!
       </p>
 
-      <!-- Reward Cards -->
-      <div class="reward-cards">
-        <div class="reward-card">
-          <div class="reward-icon">🎁</div>
-          <div class="reward-info">
-            <div class="reward-amount">Up to <span class="amount">₱200</span></div>
-            <div class="reward-label">reward</div>
-          </div>
-        </div>
-        <div class="reward-card">
-          <div class="reward-icon">🏆</div>
-          <div class="reward-info">
-            <div class="reward-amount">Up to <span class="amount">₱200</span></div>
-            <div class="reward-label">reward</div>
-          </div>
+      <!-- Spend & Get Rewards Section - NEW -->
+      <div class="spend-rewards-section">
+        <span class="spend-rewards-label">✦ Promo</span>
+        <div class="spend-rewards-text">
+          <span class="spend">Spend</span>
+          <span class="and">and</span>
+          <span class="get">Get</span>
+          <span class="rewards-highlight">₱10,000</span>
+          <span style="color: rgba(255,255,255,0.3); font-size: 0.8rem; font-weight: 400;">rewards</span>
         </div>
       </div>
 
