@@ -1,21 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // ========== AD OVERLAY ==========
+  // ========== AD OVERLAY - Appears after 5 seconds ==========
   const adOverlay = document.getElementById('adOverlay');
   const adClose = document.getElementById('adClose');
   const adCtaBtn = document.getElementById('adCtaBtn');
+  let adShown = false;
   
-  // Show ad after page loads with delay
+  // Show ad after 5 seconds
   setTimeout(() => {
-    adOverlay.classList.add('active');
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-  }, 800);
+    if (!adShown) {
+      adOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      adShown = true;
+    }
+  }, 5000);
   
   // Close ad function
   function closeAd() {
     adOverlay.classList.remove('active');
     document.body.style.overflow = '';
-    // Show toast after closing ad
     setTimeout(() => {
       showToast('✨ Check out your exclusive rewards!');
     }, 400);
@@ -27,13 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // CTA button in ad
   adCtaBtn.addEventListener('click', function() {
     closeAd();
-    // Scroll to claim button
     setTimeout(() => {
       const claimBtn = document.getElementById('claimBtn');
       if (claimBtn) {
         claimBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Highlight the claim button
-        claimBtn.style.boxShadow = '0 0 60px rgba(46, 242, 163, 0.6), 0 0 120px rgba(46, 242, 163, 0.2)';
+        claimBtn.style.boxShadow = '0 0 80px rgba(46, 242, 163, 0.5), 0 0 160px rgba(46, 242, 163, 0.15)';
         setTimeout(() => {
           claimBtn.style.boxShadow = '';
         }, 2000);
@@ -53,16 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (claimBtn) {
     claimBtn.addEventListener('click', function(e) {
-      // Add loading state
       this.classList.add('loading');
-      this.innerHTML = '<span class="btn-icon">⏳</span> Processing...';
+      this.innerHTML = '<span class="btn-icon" style="animation: spin 0.8s linear infinite;">⟳</span> Processing...';
       
-      // Simulate processing
       setTimeout(() => {
         this.classList.remove('loading');
-        this.innerHTML = '<span class="btn-icon">💜</span> Claim NOW';
-        
-        // Show success message
+        this.innerHTML = '<img src="images/maya_icon.png" alt="Maya" class="btn-icon" /> Claim NOW';
         showToast('🎉 Reward claimed successfully!');
       }, 1500);
     });
@@ -70,40 +66,37 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ========== TOAST FUNCTION ==========
   function showToast(message) {
-    // Remove existing toast
     const existingToast = document.querySelector('.toast-message');
     if (existingToast) {
       existingToast.remove();
     }
     
-    // Create toast
     const toast = document.createElement('div');
     toast.className = 'toast-message';
     toast.textContent = message;
     toast.style.cssText = `
       position: fixed;
-      bottom: 100px;
+      bottom: 120px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(3, 8, 7, 0.9);
+      backdrop-filter: blur(16px);
       color: #fff;
       padding: 0.8rem 1.5rem;
       border-radius: 16px;
-      border: 1px solid rgba(46, 242, 163, 0.2);
+      border: 1px solid rgba(46, 242, 163, 0.15);
       font-family: 'Inter', sans-serif;
       font-size: 0.9rem;
       font-weight: 500;
       z-index: 9998;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.7);
       animation: slideUp 0.3s ease;
-      max-width: 90%;
+      max-width: 85%;
       text-align: center;
     `;
     
     document.body.appendChild(toast);
     
-    // Remove after 2.5 seconds
     setTimeout(() => {
       toast.style.animation = 'slideDown 0.3s ease';
       setTimeout(() => {
@@ -135,15 +128,14 @@ document.addEventListener('DOMContentLoaded', function() {
         transform: translateX(-50%) translateY(20px);
       }
     }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   `;
   document.head.appendChild(style);
-  
-  // ========== BOTTOM NAVIGATION ==========
-  const navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach(item => {
-    item.addEventListener('click', function() {
-      navItems.forEach(nav => nav.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
 });
