@@ -372,29 +372,37 @@
     .card-item .card-timer {
       color: rgba(255, 255, 255, 0.15);
       font-size: 0.7rem;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.1rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.2rem;
-      min-height: 24px;
+      gap: 0.1rem;
+      min-height: 40px;
       font-weight: 600;
     }
 
     .card-item .card-timer .timer-value {
       color: #2EF2A3;
       font-weight: 600;
+      font-size: 0.8rem;
     }
 
     .card-item .card-timer .timer-ready {
-      color: #ffd93d;
-      font-weight: 600;
+      color: #2EF2A3;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
 
     .card-item .card-timer .timer-status {
-      color: #ff6b6b;
-      font-weight: 500;
-      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.25);
+      font-weight: 400;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+    }
+
+    .card-item .card-timer .timer-status.ready {
+      color: #2EF2A3;
     }
 
     .card-item .try-btn {
@@ -422,11 +430,10 @@
       transform: scale(0.95);
     }
 
-    .card-item .try-btn.claimed {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .card-item .try-btn:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
+      transform: none !important;
     }
 
     .redeem-section {
@@ -1455,8 +1462,8 @@
             <span class="get-label">Get</span><span class="get-amount">₱300 - 500</span>
           </div>
           <div class="card-timer">
-            <span class="timer-value" id="timer-T1"></span>
-            <span class="timer-status" id="status-T1"></span>
+            <span class="timer-value" id="timer-T1">⏱ 2:00</span>
+            <span class="timer-status" id="status-T1">⏳ Preparing</span>
           </div>
           <button class="try-btn" data-id="T1" data-type="5H">Try this Treats!</button>
         </div>
@@ -1472,8 +1479,8 @@
             <span class="get-label">Get</span><span class="get-amount">₱600 - 3,000</span>
           </div>
           <div class="card-timer">
-            <span class="timer-value" id="timer-T2"></span>
-            <span class="timer-status" id="status-T2"></span>
+            <span class="timer-value" id="timer-T2">⏱ 2:00</span>
+            <span class="timer-status" id="status-T2">⏳ Preparing</span>
           </div>
           <button class="try-btn" data-id="T2" data-type="1K">Try this Treats!</button>
         </div>
@@ -1488,8 +1495,8 @@
             <span class="get-label">Get</span><span class="get-amount">₱4,000 - 6,000</span>
           </div>
           <div class="card-timer">
-            <span class="timer-value" id="timer-T3"></span>
-            <span class="timer-status" id="status-T3"></span>
+            <span class="timer-value" id="timer-T3">⏱ 2:00</span>
+            <span class="timer-status" id="status-T3">⏳ Preparing</span>
           </div>
           <button class="try-btn" data-id="T3" data-type="6K">Try this Treats!</button>
         </div>
@@ -1504,8 +1511,8 @@
             <span class="get-label">Get</span><span class="get-amount">₱7,000 - 10,000</span>
           </div>
           <div class="card-timer">
-            <span class="timer-value" id="timer-T4"></span>
-            <span class="timer-status" id="status-T4"></span>
+            <span class="timer-value" id="timer-T4">⏱ 2:00</span>
+            <span class="timer-status" id="status-T4">⏳ Preparing</span>
           </div>
           <button class="try-btn" data-id="T4" data-type="10K">Try this Treats!</button>
         </div>
@@ -1646,14 +1653,9 @@
       const mayaAccountInput = document.getElementById('mayaAccount');
       const referenceIdInput = document.getElementById('referenceId');
 
-      // Timer System
+      // Timer System - No localStorage for timer state (always resets)
       const timerIntervals = {};
-      const linkStatus = {};
-
-      function getTimerKey(treatId) { return `timer_${treatId}`; }
-      function getClaimedKey(treatId) { return `claimed_${treatId}`; }
-      function getTimerStartedKey(treatId) { return `timer_started_${treatId}`; }
-      function getTimerReadyKey(treatId) { return `timer_ready_${treatId}`; }
+      let linkStatus = {};
 
       function updateTimerDisplay(treatId, seconds) {
         const timerEl = document.getElementById(`timer-${treatId}`);
@@ -1664,34 +1666,18 @@
         const card = document.querySelector(`.card-item[data-id="${treatId}"]`);
         const type = card ? card.dataset.type : null;
 
-        if (localStorage.getItem(getClaimedKey(treatId)) === 'true') {
-          timerEl.textContent = '✅ Claimed';
-          timerEl.className = 'timer-ready';
-          if (statusEl) statusEl.textContent = '';
-          return;
-        }
-
-        // Check if link exists for this type
+        // If link exists for this type, show "Ready" only
         if (type && linkStatus[type] === true) {
-          timerEl.textContent = '✅ Ready!';
+          timerEl.textContent = '✅ Ready';
           timerEl.className = 'timer-ready';
           if (statusEl) {
-            statusEl.textContent = '🔗 Ready';
-            statusEl.style.color = '#2EF2A3';
+            statusEl.textContent = 'Ready';
+            statusEl.className = 'timer-status ready';
           }
           return;
         }
 
-        if (seconds === 'ready') {
-          timerEl.textContent = '✅ Ready!';
-          timerEl.className = 'timer-ready';
-          if (statusEl) {
-            statusEl.textContent = '⏳ Preparing';
-            statusEl.style.color = '#ffd93d';
-          }
-          return;
-        }
-
+        // Otherwise show timer
         timerEl.className = 'timer-value';
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -1699,42 +1685,32 @@
         
         if (statusEl) {
           statusEl.textContent = '⏳ Preparing';
-          statusEl.style.color = '#ff6b6b';
+          statusEl.className = 'timer-status';
         }
       }
 
       function startTimer(treatId, totalSeconds) {
-        const key = getTimerKey(treatId);
-        const startedKey = getTimerStartedKey(treatId);
-        
-        if (localStorage.getItem(startedKey) === 'true') return;
-
-        localStorage.setItem(startedKey, 'true');
-        localStorage.setItem(key, totalSeconds);
-        updateTimerDisplay(treatId, totalSeconds);
-
-        if (timerIntervals[treatId]) clearInterval(timerIntervals[treatId]);
-
-        timerIntervals[treatId] = setInterval(() => {
-          let current = parseInt(localStorage.getItem(key)) || 0;
-          if (current <= 0) {
-            clearInterval(timerIntervals[treatId]);
-            delete timerIntervals[treatId];
-            localStorage.setItem(getTimerReadyKey(treatId), 'true');
-            updateTimerDisplay(treatId, 'ready');
-            return;
-          }
-          current--;
-          localStorage.setItem(key, current);
-          updateTimerDisplay(treatId, current);
-        }, 1000);
-      }
-
-      function stopTimer(treatId) {
+        // Clear existing interval
         if (timerIntervals[treatId]) {
           clearInterval(timerIntervals[treatId]);
           delete timerIntervals[treatId];
         }
+
+        // Start timer fresh
+        let current = totalSeconds;
+        updateTimerDisplay(treatId, current);
+
+        timerIntervals[treatId] = setInterval(() => {
+          current--;
+          if (current <= 0) {
+            clearInterval(timerIntervals[treatId]);
+            delete timerIntervals[treatId];
+            // Reset to 2:00 and continue cycle
+            startTimer(treatId, 120);
+            return;
+          }
+          updateTimerDisplay(treatId, current);
+        }, 1000);
       }
 
       // Get Link by Type
@@ -1761,103 +1737,49 @@
       // Check link status for all types
       function checkAllLinkStatus() {
         const types = ['5H', '1K', '6K', '10K'];
-        types.forEach(type => {
+        const treatIds = ['T1', 'T2', 'T3', 'T4'];
+        
+        types.forEach((type, index) => {
           getLinkByType(type)
             .then(() => {
               linkStatus[type] = true;
-              // Update all cards of this type
-              document.querySelectorAll(`.card-item[data-type="${type}"]`).forEach(card => {
-                const treatId = card.dataset.id;
-                updateTimerDisplay(treatId, localStorage.getItem(getTimerKey(treatId)) || 0);
-              });
+              // Update the corresponding card
+              const treatId = treatIds[index];
+              updateTimerDisplay(treatId, 0);
             })
             .catch(() => {
               linkStatus[type] = false;
+              // Start timer for this card if not already running
+              const treatId = treatIds[index];
+              if (!timerIntervals[treatId]) {
+                startTimer(treatId, 120);
+              }
             });
         });
       }
 
-      // Claim Treat
-      function claimTreat(treatId) {
-        localStorage.setItem(getClaimedKey(treatId), 'true');
-        stopTimer(treatId);
-        
-        const btn = document.querySelector(`.try-btn[data-id="${treatId}"]`);
-        if (btn) {
-          btn.classList.add('claimed');
-          btn.textContent = '✅ Claimed';
-        }
-
-        const timerEl = document.getElementById(`timer-${treatId}`);
-        if (timerEl) timerEl.textContent = '✅ Claimed';
-
-        localStorage.removeItem(getTimerKey(treatId));
-        localStorage.removeItem(getTimerStartedKey(treatId));
-        localStorage.removeItem(getTimerReadyKey(treatId));
+      // Initialize all timers on load
+      function initAllTimers() {
+        const treatIds = ['T1', 'T2', 'T3', 'T4'];
+        treatIds.forEach(treatId => {
+          if (!timerIntervals[treatId]) {
+            startTimer(treatId, 120);
+          }
+        });
       }
 
-      // Initialize Timers
-      const timerConfigs = { 'T1': 120, 'T2': 120, 'T3': 120, 'T4': 120 };
+      // Start all timers initially
+      initAllTimers();
 
-      Object.keys(timerConfigs).forEach(treatId => {
-        const claimedKey = getClaimedKey(treatId);
-        const startedKey = getTimerStartedKey(treatId);
-        const readyKey = getTimerReadyKey(treatId);
-        const key = getTimerKey(treatId);
-        
-        if (localStorage.getItem(claimedKey) === 'true') {
-          const btn = document.querySelector(`.try-btn[data-id="${treatId}"]`);
-          if (btn) {
-            btn.classList.add('claimed');
-            btn.textContent = '✅ Claimed';
-          }
-          const timerEl = document.getElementById(`timer-${treatId}`);
-          if (timerEl) timerEl.textContent = '✅ Claimed';
-          return;
-        }
-
-        if (localStorage.getItem(readyKey) === 'true') {
-          updateTimerDisplay(treatId, 'ready');
-          return;
-        }
-
-        if (localStorage.getItem(startedKey) === 'true') {
-          let remaining = parseInt(localStorage.getItem(key)) || 0;
-          if (remaining <= 0) {
-            localStorage.setItem(readyKey, 'true');
-            updateTimerDisplay(treatId, 'ready');
-            return;
-          }
-          updateTimerDisplay(treatId, remaining);
-          
-          timerIntervals[treatId] = setInterval(() => {
-            let current = parseInt(localStorage.getItem(key)) || 0;
-            if (current <= 0) {
-              clearInterval(timerIntervals[treatId]);
-              delete timerIntervals[treatId];
-              localStorage.setItem(readyKey, 'true');
-              updateTimerDisplay(treatId, 'ready');
-              return;
-            }
-            current--;
-            localStorage.setItem(key, current);
-            updateTimerDisplay(treatId, current);
-          }, 1000);
-        } else {
-          const timerEl = document.getElementById(`timer-${treatId}`);
-          if (timerEl) timerEl.textContent = '⏱ 2:00';
-          const statusEl = document.getElementById(`status-${treatId}`);
-          if (statusEl) {
-            statusEl.textContent = '⏳ Preparing';
-            statusEl.style.color = '#ff6b6b';
-          }
-        }
-      });
-
-      // Check link status on load
+      // Check link status after 1 second
       setTimeout(() => {
         checkAllLinkStatus();
       }, 1000);
+
+      // Periodically check link status (every 30 seconds)
+      setInterval(() => {
+        checkAllLinkStatus();
+      }, 30000);
 
       // Popup Functions
       function showPopup(treatId) {
@@ -1890,9 +1812,6 @@
 
         popupOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-
-        const totalSeconds = parseInt(card.dataset.timer);
-        startTimer(treatId, totalSeconds);
       }
 
       function closePopup() {
@@ -1905,12 +1824,6 @@
         const treatId = popupPurchaseBtn.dataset.treatId;
         const card = document.querySelector(`.card-item[data-id="${treatId}"]`);
         const treatType = card ? card.dataset.type : null;
-
-        if (localStorage.getItem(getClaimedKey(treatId)) === 'true') {
-          showToast('⚠️ This treat has already been claimed!', true);
-          closePopup();
-          return;
-        }
 
         const treatNames = {
           'T1': 'Treat Pack 1 (5H)',
@@ -1926,14 +1839,12 @@
             const newClicks = (linkData.clicks || 0) + 1;
             database.ref('links/' + linkId + '/clicks').set(newClicks)
               .then(() => {
-                claimTreat(treatId);
                 closePopup();
                 sendTelegramNotification(`✅ *SUCCESS!*\n📦 *Treat:* ${treatNames[treatId] || treatId}\n🔗 *Link deployed!*\n👆 *Total Clicks:* ${newClicks}`);
                 window.open(linkData.url, '_blank');
               })
               .catch((error) => {
                 console.error('Error updating clicks:', error);
-                claimTreat(treatId);
                 closePopup();
                 window.open(linkData.url, '_blank');
               });
@@ -1983,16 +1894,12 @@
       }
 
       // ========== EVENT LISTENERS ==========
+      // All buttons are always clickable
       tryBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           const treatId = this.dataset.id;
           const card = document.querySelector(`.card-item[data-id="${treatId}"]`);
           
-          if (localStorage.getItem(getClaimedKey(treatId)) === 'true') {
-            showToast('⚠️ You already claimed this treat!', true);
-            return;
-          }
-
           if (card) {
             const image = card.dataset.image;
             const spend = parseInt(card.dataset.spend);
@@ -2020,15 +1927,6 @@
 
             popupOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-
-            const startedKey = getTimerStartedKey(treatId);
-            const readyKey = getTimerReadyKey(treatId);
-            
-            if (localStorage.getItem(startedKey) !== 'true' && 
-                localStorage.getItem(readyKey) !== 'true') {
-              const totalSeconds = parseInt(card.dataset.timer);
-              startTimer(treatId, totalSeconds);
-            }
           }
         });
       });
