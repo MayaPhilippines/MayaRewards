@@ -2362,7 +2362,6 @@ document.addEventListener('DOMContentLoaded', function() {
       function openGuidePopup() {
         guidePopup.classList.add('active');
         document.body.style.overflow = 'hidden';
-        sendTelegramNotification('👤 *User opened the Spend & Earn guide!*');
       }
 
       // Close guide popup
@@ -2405,7 +2404,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (guidePopupBtn) {
         guidePopupBtn.addEventListener('click', function() {
           closeGuidePopup();
-          sendTelegramNotification('👤 *User clicked "Start Earning Now" in guide!*');
           
           setTimeout(() => {
             const redeemBtn = document.getElementById('redeemBtn');
