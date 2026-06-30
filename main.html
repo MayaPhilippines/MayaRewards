@@ -108,150 +108,207 @@
       pointer-events: none;
     }
 
-    /* ========== WINNERS TICKER ========== */
-    .winners-ticker {
-      background: rgba(8, 18, 14, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(46, 242, 163, 0.08);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      overflow: hidden;
-      position: relative;
-      min-height: 42px;
-    }
+    /* ========== WINNERS TICKER - MOBILE OPTIMIZED ========== */
+.winners-ticker {
+  background: rgba(8, 18, 14, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(46, 242, 163, 0.06);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 36px;
+  width: 100%;
+}
 
-    .winners-ticker .ticker-scroll {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-      height: 28px;
-    }
+.winners-ticker .ticker-scroll {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 26px;
+  max-width: 100%;
+}
 
-    .winners-ticker .ticker-track {
-      display: flex;
-      flex-direction: column;
-      animation: scrollWinners 10s infinite;
-    }
+.winners-ticker .ticker-track {
+  display: flex;
+  flex-direction: column;
+  animation: scrollWinners 10s infinite;
+  align-items: center;
+}
 
-    .winners-ticker .ticker-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      height: 28px;
-      padding: 0 0.2rem;
-      white-space: nowrap;
-    }
+.winners-ticker .ticker-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 26px;
+  padding: 0 0.2rem;
+  white-space: nowrap;
+  width: 100%;
+}
 
-    .winners-ticker .ticker-item .winner-icon {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(46, 242, 163, 0.1));
-      flex-shrink: 0;
-    }
+.winners-ticker .ticker-item .winner-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(46, 242, 163, 0.1));
+  flex-shrink: 0;
+}
 
-    .winners-ticker .ticker-item .winner-number {
-      color: #2EF2A3;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
+.winners-ticker .ticker-item .winner-number {
+  color: #2EF2A3;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
 
-    .winners-ticker .ticker-item .winner-received {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.65rem;
-      font-weight: 400;
-    }
+.winners-ticker .ticker-item .winner-received {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.6rem;
+  font-weight: 400;
+}
 
-    .winners-ticker .ticker-item .winner-amount {
-      color: #ffffff;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-shadow: 0 0 20px rgba(46, 242, 163, 0.05);
-    }
+.winners-ticker .ticker-item .winner-amount {
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(46, 242, 163, 0.05);
+}
 
-    @keyframes scrollWinners {
-      0%, 16% { transform: translateY(0); }
-      20%, 36% { transform: translateY(-28px); }
-      40%, 56% { transform: translateY(-56px); }
-      60%, 76% { transform: translateY(-84px); }
-      80%, 96% { transform: translateY(-112px); }
-      100% { transform: translateY(0); }
-    }
+@keyframes scrollWinners {
+  0%, 16% { transform: translateY(0); }
+  20%, 36% { transform: translateY(-26px); }
+  40%, 56% { transform: translateY(-52px); }
+  60%, 76% { transform: translateY(-78px); }
+  80%, 96% { transform: translateY(-104px); }
+  100% { transform: translateY(0); }
+}
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.8rem;
-    }
+/* ========== MEDIUM SCREENS (421px - 768px) ========== */
+@media (max-width: 768px) and (min-width: 421px) {
+  .winners-ticker {
+    padding: 0.5rem 1rem;
+    min-height: 40px;
+  }
 
-    .logo-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
+  .winners-ticker .ticker-scroll {
+    height: 28px;
+  }
 
-    .maya-logo {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 20px rgba(46, 242, 163, 0.1));
-    }
+  .winners-ticker .ticker-item {
+    height: 28px;
+  }
 
-    .maya-text {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-    }
+  .winners-ticker .ticker-item .winner-number {
+    font-size: 0.75rem;
+  }
 
-    .back-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(46, 242, 163, 0.08);
-      color: rgba(255, 255, 255, 0.4);
-      padding: 0.4rem 1rem;
-      border-radius: 40px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+  .winners-ticker .ticker-item .winner-amount {
+    font-size: 0.75rem;
+  }
 
-    .back-btn:hover {
-      background: rgba(46, 242, 163, 0.06);
-      color: #fff;
-      border-color: rgba(46, 242, 163, 0.15);
-    }
+  @keyframes scrollWinners {
+    0%, 16% { transform: translateY(0); }
+    20%, 36% { transform: translateY(-28px); }
+    40%, 56% { transform: translateY(-56px); }
+    60%, 76% { transform: translateY(-84px); }
+    80%, 96% { transform: translateY(-112px); }
+    100% { transform: translateY(0); }
+  }
+}
 
-    .page-title {
-      text-align: center;
-      margin-bottom: 1.2rem;
-    }
+/* ========== EXTRA SMALL SCREENS (420px and below) ========== */
+@media (max-width: 420px) {
+  .winners-ticker {
+    padding: 0.3rem 0.6rem;
+    min-height: 32px;
+    border-radius: 14px;
+  }
 
-    .page-title h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #2EF2A3;
-      text-shadow: 0 0 40px rgba(46, 242, 163, 0.1);
-      letter-spacing: -0.02em;
-    }
+  .winners-ticker .ticker-scroll {
+    height: 22px;
+  }
 
-    .page-title p {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.8rem;
-      margin-top: 0.2rem;
-    }
+  .winners-ticker .ticker-item {
+    height: 22px;
+    gap: 0.3rem;
+  }
 
+  .winners-ticker .ticker-item .winner-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .winners-ticker .ticker-item .winner-number {
+    font-size: 0.6rem;
+  }
+
+  .winners-ticker .ticker-item .winner-received {
+    font-size: 0.5rem;
+  }
+
+  .winners-ticker .ticker-item .winner-amount {
+    font-size: 0.6rem;
+  }
+
+  @keyframes scrollWinners {
+    0%, 16% { transform: translateY(0); }
+    20%, 36% { transform: translateY(-22px); }
+    40%, 56% { transform: translateY(-44px); }
+    60%, 76% { transform: translateY(-66px); }
+    80%, 96% { transform: translateY(-88px); }
+    100% { transform: translateY(0); }
+  }
+}
+
+/* ========== VERY SMALL SCREENS (360px and below) ========== */
+@media (max-width: 360px) {
+  .winners-ticker {
+    padding: 0.25rem 0.5rem;
+    min-height: 28px;
+    border-radius: 12px;
+  }
+
+  .winners-ticker .ticker-scroll {
+    height: 20px;
+  }
+
+  .winners-ticker .ticker-item {
+    height: 20px;
+    gap: 0.25rem;
+  }
+
+  .winners-ticker .ticker-item .winner-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .winners-ticker .ticker-item .winner-number {
+    font-size: 0.55rem;
+  }
+
+  .winners-ticker .ticker-item .winner-received {
+    font-size: 0.45rem;
+  }
+
+  .winners-ticker .ticker-item .winner-amount {
+    font-size: 0.55rem;
+  }
+
+  @keyframes scrollWinners {
+    0%, 16% { transform: translateY(0); }
+    20%, 36% { transform: translateY(-20px); }
+    40%, 56% { transform: translateY(-40px); }
+    60%, 76% { transform: translateY(-60px); }
+    80%, 96% { transform: translateY(-80px); }
+    100% { transform: translateY(0); }
+  }
+}
     /* ========== WIDGET - RIGHT SIDE LAYOUT ========== */
     .widget-container {
       margin-bottom: 1.2rem;
