@@ -53,29 +53,25 @@
       bottom: 100px;
       right: 16px;
       z-index: 9997;
-      opacity: 0;
-      visibility: hidden;
-      transform: scale(0.8) translateY(20px);
-      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
-    }
-
-    .floating-widget.show {
       opacity: 1;
       visibility: visible;
-      transform: scale(1) translateY(0);
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .floating-widget:hover {
+      transform: scale(1.08);
     }
 
     .floating-widget .widget-circle {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      overflow: hidden;
+      overflow: visible;
       border: 2px solid rgba(46, 242, 163, 0.3);
       box-shadow: 0 0 30px rgba(46, 242, 163, 0.15),
                   0 0 60px rgba(46, 242, 163, 0.08);
       position: relative;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -133,25 +129,79 @@
 
     .floating-widget .widget-circle .widget-label {
       position: absolute;
-      bottom: -22px;
+      bottom: -26px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(3, 8, 7, 0.85);
       backdrop-filter: blur(8px);
-      padding: 0.15rem 0.6rem;
+      padding: 0.2rem 0.8rem;
       border-radius: 20px;
-      font-size: 0.5rem;
-      font-weight: 600;
+      font-size: 0.55rem;
+      font-weight: 700;
       color: #2EF2A3;
       white-space: nowrap;
       border: 1px solid rgba(46, 242, 163, 0.08);
       z-index: 3;
       letter-spacing: 0.04em;
+      text-shadow: 0 0 20px rgba(46, 242, 163, 0.1);
+    }
+
+    /* ========== CLICK HERE INDICATOR ========== */
+    .click-indicator {
+      position: absolute;
+      top: -20px;
+      right: -30px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      animation: clickBounce 1.2s ease-in-out infinite;
+      background: linear-gradient(135deg, #2EF2A3, #1bcb86);
+      padding: 0.25rem 0.8rem;
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(46, 242, 163, 0.3), 0 0 60px rgba(46, 242, 163, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+
+    .click-indicator .click-text {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #031009;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .click-indicator .click-arrow {
+      font-size: 0.8rem;
+      color: #031009;
+      font-weight: 900;
+      animation: arrowMove 1s ease-in-out infinite;
+    }
+
+    @keyframes clickBounce {
+      0%, 100% {
+        transform: scale(1) rotate(-5deg);
+      }
+      50% {
+        transform: scale(1.08) rotate(5deg);
+      }
+    }
+
+    @keyframes arrowMove {
+      0%, 100% {
+        transform: translateX(0);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translateX(4px);
+        opacity: 1;
+      }
     }
 
     .floating-widget .widget-tooltip {
       position: absolute;
-      right: 80px;
+      right: 90px;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(3, 8, 7, 0.85);
@@ -1398,18 +1448,33 @@
       }
 
       .floating-widget .widget-circle {
-        width: 56px;
-        height: 56px;
+        width: 60px;
+        height: 60px;
       }
 
       .floating-widget .widget-circle img {
-        width: 44px;
-        height: 44px;
+        width: 45px;
+        height: 45px;
       }
 
       .floating-widget .widget-circle .widget-label {
         font-size: 0.45rem;
         bottom: -20px;
+        padding: 0.15rem 0.6rem;
+      }
+
+      .click-indicator {
+        top: -16px;
+        right: -20px;
+        padding: 0.2rem 0.6rem;
+      }
+
+      .click-indicator .click-text {
+        font-size: 0.45rem;
+      }
+
+      .click-indicator .click-arrow {
+        font-size: 0.6rem;
       }
     }
 
@@ -1432,13 +1497,33 @@
       }
 
       .floating-widget .widget-circle {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
       }
 
       .floating-widget .widget-circle img {
         width: 38px;
         height: 38px;
+      }
+
+      .click-indicator {
+        top: -14px;
+        right: -16px;
+        padding: 0.15rem 0.5rem;
+      }
+
+      .click-indicator .click-text {
+        font-size: 0.4rem;
+      }
+
+      .click-indicator .click-arrow {
+        font-size: 0.5rem;
+      }
+
+      .floating-widget .widget-circle .widget-label {
+        font-size: 0.4rem;
+        bottom: -18px;
+        padding: 0.1rem 0.5rem;
       }
     }
 
@@ -1463,15 +1548,20 @@
 </head>
 <body>
   <!-- Floating Widget -->
-  <div class="floating-widget" id="floatingWidget">
-    <div class="widget-circle">
-      <img src="https://www.mayabank.ph/wp-content/uploads/2025/08/endorsers-mobile.png" alt="Spin & Get" />
-      <span class="widget-label">Spin & Get</span>
-    </div>
-    <div class="widget-tooltip">
-      ✦ <span class="highlight-text">Spin & Get</span> · Earn more rewards!
+<div class="floating-widget" id="floatingWidget">
+  <div class="widget-circle">
+    <img src="https://www.mayabank.ph/wp-content/uploads/2025/08/endorsers-mobile.png" alt="Spend and Get" />
+    <span class="widget-label">Spend and Get</span>
+    <!-- Click Here Indicator -->
+    <div class="click-indicator">
+      <span class="click-text">👆 Click Here</span>
+      <span class="click-arrow">→</span>
     </div>
   </div>
+  <div class="widget-tooltip">
+    ✦ <span class="highlight-text">Spend and Get</span> · Earn more rewards!
+  </div>
+</div>
 
   <!-- Initial Ad Overlay -->
   <div class="ad-overlay initial-ad" id="initialAdOverlay">
