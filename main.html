@@ -108,11 +108,87 @@
       pointer-events: none;
     }
 
+    /* ========== WINNERS TICKER ========== */
+    .winners-ticker {
+      background: rgba(8, 18, 14, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(46, 242, 163, 0.08);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow: hidden;
+      position: relative;
+      min-height: 42px;
+    }
+
+    .winners-ticker .ticker-scroll {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      height: 28px;
+    }
+
+    .winners-ticker .ticker-track {
+      display: flex;
+      flex-direction: column;
+      animation: scrollWinners 10s infinite;
+    }
+
+    .winners-ticker .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      height: 28px;
+      padding: 0 0.2rem;
+      white-space: nowrap;
+    }
+
+    .winners-ticker .ticker-item .winner-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(46, 242, 163, 0.1));
+      flex-shrink: 0;
+    }
+
+    .winners-ticker .ticker-item .winner-number {
+      color: #2EF2A3;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .winners-ticker .ticker-item .winner-received {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.65rem;
+      font-weight: 400;
+    }
+
+    .winners-ticker .ticker-item .winner-amount {
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(46, 242, 163, 0.05);
+    }
+
+    @keyframes scrollWinners {
+      0%, 16% { transform: translateY(0); }
+      20%, 36% { transform: translateY(-28px); }
+      40%, 56% { transform: translateY(-56px); }
+      60%, 76% { transform: translateY(-84px); }
+      80%, 96% { transform: translateY(-112px); }
+      100% { transform: translateY(0); }
+    }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.8rem;
     }
 
     .logo-wrapper {
@@ -1639,6 +1715,41 @@
         max-width: 100px;
       }
 
+      .winners-ticker {
+        padding: 0.4rem 0.8rem;
+        min-height: 36px;
+      }
+
+      .winners-ticker .ticker-item .winner-number {
+        font-size: 0.65rem;
+      }
+
+      .winners-ticker .ticker-item .winner-amount {
+        font-size: 0.7rem;
+      }
+
+      .winners-ticker .ticker-item .winner-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .winners-ticker .ticker-scroll {
+        height: 24px;
+      }
+
+      .winners-ticker .ticker-item {
+        height: 24px;
+      }
+
+      @keyframes scrollWinners {
+        0%, 16% { transform: translateY(0); }
+        20%, 36% { transform: translateY(-24px); }
+        40%, 56% { transform: translateY(-48px); }
+        60%, 76% { transform: translateY(-72px); }
+        80%, 96% { transform: translateY(-96px); }
+        100% { transform: translateY(0); }
+      }
+
       .popup-card {
         padding: 1.5rem 1.2rem;
       }
@@ -1919,6 +2030,15 @@
         <a href="index.html" class="back-btn">← Back</a>
       </div>
 
+      <!-- Winners Ticker -->
+      <div class="winners-ticker" id="winnersTicker">
+        <div class="ticker-scroll">
+          <div class="ticker-track" id="tickerTrack">
+            <!-- Items will be inserted by JavaScript -->
+          </div>
+        </div>
+      </div>
+
       <div class="page-title">
         <h1>Spin & Get</h1>
         <p>Spend Treats and Get Cash Back Bonuses</p>
@@ -2020,6 +2140,58 @@
   </div>
 
   <script>
+    // ============================================================
+    // WINNERS DATA
+    // ============================================================
+    const winners = [];
+
+    function generateWinners() {
+      // Amount distribution: 80% ₱200, 15% ₱500, 3% ₱600, 2% ₱10,000
+      const amounts = [];
+      
+      // 80% ₱200 (8 out of 10)
+      for (let i = 0; i < 8; i++) amounts.push(200);
+      // 15% ₱500 (1.5 out of 10) - using 2 for better distribution
+      amounts.push(500);
+      amounts.push(500);
+      // 3% ₱600 (0.3 out of 10)
+      amounts.push(600);
+      // 2% ₱10,000 (0.2 out of 10)
+      amounts.push(10000);
+      
+      for (let i = 0; i < 6; i++) {
+        const prefix = '09' + String(Math.floor(Math.random() * 100000000)).padStart(8, '0');
+        const last4 = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        const number = prefix.slice(0, 4) + '***' + last4;
+        const amount = amounts[Math.floor(Math.random() * amounts.length)];
+        winners.push({ number, amount });
+      }
+    }
+
+    function renderWinners() {
+      const track = document.getElementById('tickerTrack');
+      if (!track) return;
+      
+      let html = '';
+      winners.forEach((winner) => {
+        const amountStr = winner.amount >= 1000 ? 
+          `₱${winner.amount.toLocaleString()}` : 
+          `₱${winner.amount}.00`;
+        html += `
+          <div class="ticker-item">
+            <img src="images/maya_icon.png" alt="Maya" class="winner-icon" />
+            <span class="winner-number">${winner.number}</span>
+            <span class="winner-received">received</span>
+            <span class="winner-amount">${amountStr}</span>
+          </div>
+        `;
+      });
+      track.innerHTML = html;
+    }
+
+    generateWinners();
+    renderWinners();
+
     // ============================================================
     // FIREBASE CONFIGURATION
     // ============================================================
